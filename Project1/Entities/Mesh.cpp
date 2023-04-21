@@ -39,7 +39,7 @@ void Mesh::Draw(Shader& shader, CameraAndControls& camera)
 		}
 		textures[i].texUnit(shader, (type + num).c_str(), i);
 		textures[i].Bind();
-	}
+	}	
 	GLuint uniform_camPos = glGetUniformLocation(shader.ID, "camPos");
 	glm::vec3 camPos = glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z);
 	
