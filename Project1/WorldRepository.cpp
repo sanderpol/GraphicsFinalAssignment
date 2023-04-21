@@ -58,8 +58,9 @@ void WorldRepository::Render(CameraAndControls camara) {
 	
 }
 
-void WorldRepository::InitBuffers(const glm::mat4 projection)
-{
+//void WorldRepository::InitBuffers(const glm::mat4 proj)
+//{
+
 	//Model teapot = s_model_factory.GetModel("teapot.obj");
 	//UniqueState teapotU = s_world_models.at("teapot.obj");
 
@@ -74,4 +75,4 @@ void WorldRepository::InitBuffers(const glm::mat4 projection)
 	////glUniformMatrix4fv(s_uniform_mv, 1, GL_FALSE, glm::value_ptr(mv));
 	////glUniformMatrix4fv(uniform_proj, 1, GL_FALSE, glm::value_ptr(projection));
 	//glUniform3fv(uniform_light_pos, 1, glm::value_ptr(glm::vec3(4.0, 4.0, 4.0)));
-}
+//}

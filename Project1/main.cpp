@@ -127,7 +127,7 @@ int main(int argc, char** argv)
     // Hide console window
     HWND hWnd = GetConsoleWindow();
     ShowWindow(hWnd, SW_HIDE);
-
+    //std::cin.get();
     // Main loop
     glutMainLoop();
 

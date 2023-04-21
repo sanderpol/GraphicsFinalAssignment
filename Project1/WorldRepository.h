@@ -21,7 +21,7 @@ private:
 public:
 	void InitializeWorldRepository();
 	void Render(CameraAndControls camara);
-	void InitBuffers(glm::mat4 projection);
+	//void InitBuffers(glm::mat4 proj);
 
 };
 
