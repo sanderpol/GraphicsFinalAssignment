@@ -77,29 +77,20 @@ void CameraAndControls::MotionHandler(int x, int y, float deltaTime) {
 
 	std::cout << "MotionHandler() called with x = " << x << " and y = " << y << std::endl;
 
-
 	if (firstClick) {
-		
-		firstClick = true;
+		firstClick = false; // set to false instead of true
+		glutWarpPointer(this->width / 2, this->height / 2);
+		return;
 	}
-	float rotX = sensitivity * deltaTime * (float)(x - (height / 2)) / height;
-	float rotY = sensitivity * deltaTime * (float)(y - (width / 2)) / width;
 
+	float rotX = this->sensitivity * deltaTime * (float)(x - (this->width / 2)) / this->width;
+	float rotY = this->sensitivity * deltaTime *  (float)(y - (this->height / 2)) / this->height;
 
-	////prevent camera from doing a barrel roll
-	glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), glm::normalize(glm::cross(Orientation, Up)));
-	//glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), glm::vec3(1.0, 0.0, 0.0));
-
-	if (abs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <= glm::radians(85.0f))
-	{
+	glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), Up);
+	if (abs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <= glm::radians(85.0f)) {
 		Orientation = newOrientation;
 	}
-
-	std::cout << Orientation.x << " " << Orientation.y << " " << Orientation.z << std::endl;
-
-	
-	//// Rotates the Orientation left and right
-	Orientation = glm::rotate(Orientation, glm::radians(-rotY), Up);
+	Orientation = glm::rotate(Orientation, glm::radians(-rotY), glm::normalize(glm::cross(Orientation, Up)));
 
 	glutWarpPointer(this->width / 2, this->height / 2);
 

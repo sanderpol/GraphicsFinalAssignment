@@ -17,11 +17,10 @@ private:
 	static ModelFactory s_model_factory;
 	Shader s_shader;
 	GLuint s_uniform_mv;
-	unordered_map<std::string, UniqueState> s_world_models;
+	
 public:
 	void InitializeWorldRepository();
 	void Render(CameraAndControls camara);
-	//void InitBuffers(glm::mat4 proj);
-
+	
 };
 

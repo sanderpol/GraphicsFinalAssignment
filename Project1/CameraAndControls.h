@@ -25,9 +25,8 @@ public:
 	int width;
 
 	float speed = 0.1f;
-	float yaw = -90.0f;
-	float pitch = -90.0f;
-	float sensitivity = 0.100f;
+
+	float sensitivity = 50000.0f;
 
 	CameraAndControls(int width, int height, glm::vec3 position);
 	void SetCamera(Shader& shader, const char* uniform);

@@ -148,6 +148,7 @@
     <ClInclude Include="CameraAndControls.h" />
     <ClInclude Include="Entities\EBO.h" />
     <ClInclude Include="Libraries\glsl.h" />
+    <ClInclude Include="Libraries\json.h" />
     <ClInclude Include="Libraries\objloader.h" />
     <ClInclude Include="Libraries\stb_image.h" />
     <ClInclude Include="Entities\Model.h" />

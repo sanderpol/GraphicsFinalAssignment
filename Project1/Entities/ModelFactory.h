@@ -5,13 +5,14 @@
 #include "../Libraries/objloader.h"
 class ModelFactory
 {
+	
+
 private:
 	std::unordered_map<std::string, Model> models_;
-	std::string GetKey(const SharedState& ss) const;
-	SharedState CreateModelSharedState(std::string fileName);
+	Model CreateModel(const std::string fileName);
 public:
 	ModelFactory();
 	ModelFactory(std::initializer_list<std::string>);
-	Model GetModel(std::string key);	
+	Model GetModel(const std::string key);	
 };
 

@@ -23,11 +23,12 @@
 //--------------------------------------------------------------------------------
 
 const int16_t WIDTH = 1280, HEIGHT = 720;
-unsigned const int DELTA_TIME = 10;
+const float DELTA_TIME = 60.0f;
 
+WorldRepository* worldRep;
 Skybox* skybox;
 CameraAndControls* camera;
-int deltaTime, oldTimeSinceStart = 0;
+float deltaTime;
 
 //--------------------------------------------------------------------------------
 // Rendering
@@ -41,12 +42,16 @@ void Render()
 
     
     //calculate deltaTime
-    int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
-    deltaTime = timeSinceStart - oldTimeSinceStart;
-    oldTimeSinceStart = timeSinceStart;
+    static float prevTime = 0.0f;
+    float currTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+    deltaTime = currTime - prevTime;
+    prevTime = currTime;
 
-    //WorldRepository::Render(view);
-    skybox->Render(*camera);
+    deltaTime /= 60.0f;
+
+    worldRep->Render(*camera);
+    //skybox->Render(*camera);
+
 
 
     // Swap buffers
@@ -55,6 +60,7 @@ void Render()
     int errorCode = glGetError();
     std::cout << errorCode << endl;
 }
+
 /// <summary>
 /// hadnles the keyEvent through to the camera class, the glutKeyboardFunc only is able to handle staic functions.
 /// </summary>
@@ -67,7 +73,7 @@ void MouseHandler(int button, int state, int x, int y) {
 }
 
 void MotionHandler(int x, int y) {
-    camera->MotionHandler(x, y, (float) 1/deltaTime);
+    camera->MotionHandler(x, y, deltaTime);
 }
 //------------------------------------------------------------
 // void Render(int n)
@@ -112,7 +118,7 @@ void InitGlutGlew(int argc, char** argv)
 //------------------------------------------------------------
 void InitBuffers() {
     //WorldRepository::InitBuffers(projection);
-    skybox->InitSkyboxShadersAndBuffers();
+    //skybox->InitSkyboxShadersAndBuffers();
 }
 
 
@@ -122,7 +128,9 @@ int main(int argc, char** argv)
     //WorldRepository::InitializeWorldRepository();
 
     camera = new CameraAndControls(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
-    skybox = new Skybox();
+    worldRep = new WorldRepository();
+    worldRep->InitializeWorldRepository();
+    //skybox = new Skybox();
     InitBuffers();
     // Hide console window
     HWND hWnd = GetConsoleWindow();

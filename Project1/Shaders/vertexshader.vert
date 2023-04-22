@@ -10,6 +10,11 @@ layout (location = 3) in vec2 uvs;
 uniform mat4 camPos;
 uniform mat4 model;
 
+uniform mat4 translation;
+uniform mat4 rotation;
+uniform mat4 scale;
+
+
 
 
 out VS_OUT
@@ -22,13 +27,14 @@ out VS_OUT
 
 void main()
 {
-    vs_out.Pos = vec3(model * vec4(pos, 1.0f));
+    //use a negative rotation gltf files use counterclockwise rotation instead of opengl clockwise rotation.
+    vs_out.Pos = vec3(model * translation * -rotation * scale * vec4(pos, 1.0f));
 
     vs_out.Norms = normal;
 
     vs_out.Color = color;
     
-    vs_out.TexCor = uvs;
+    vs_out.TexCor = mat2(0.0, -1.0, 1.0, 0.0) * uvs;
 
     gl_Position = (camPos * vec4(vs_out.Pos, 1.0f));
 }
