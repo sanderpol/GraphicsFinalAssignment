@@ -13,11 +13,11 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vec
 	VAO.LinkVBO(VBO, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
 	VAO.LinkVBO(VBO, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
 	VAO.LinkVBO(VBO, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
-	VAO.LinkVBO(VBO, 3, 3, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
+	VAO.LinkVBO(VBO, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
 
-	VAO::Unbind();
-	VBO::Unbind();
-	EBO::Unbind();
+	VAO.Unbind();
+	VBO.Unbind();
+	EBO.Unbind();
 }
 
 void Mesh::Draw(Shader& shader, CameraAndControls& camera, glm::mat4 matrix, glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
@@ -40,11 +40,9 @@ void Mesh::Draw(Shader& shader, CameraAndControls& camera, glm::mat4 matrix, glm
 		textures[i].texUnit(shader, (type + num).c_str(), i);
 		textures[i].Bind();
 	}
-	GLuint uniform_camPos = glGetUniformLocation(shader.ID, "camPos");
-	glm::vec3 camPos = glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z);
 
-	glUniform3fv(uniform_camPos, 1, glm::value_ptr(camPos));
-	camera.SetCamera(shader, "camMatrix");
+	camera.SetCameraPos(shader, "camPos");
+	camera.SetCamera(shader, "camMat");
 
 	glm::mat4 trans = glm::mat4(1.0f);
 	glm::mat4 rot = glm::mat4(1.0f);

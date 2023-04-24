@@ -14,7 +14,12 @@ void CameraAndControls::SetCamera(Shader& shader, const char* uniform)
 
 	view = GetViewMatrix();
 	projection = GetProjectionMatrix();
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(view * projection));
+	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(projection * view));
+}
+
+void CameraAndControls::SetCameraPos(Shader& shader, const char* uniform)
+{
+	glUniform3f(glGetUniformLocation(shader.ID, uniform), this->Position.x, this->Position.y, this->Position.z);
 }
 
 glm::mat4 CameraAndControls::GetViewMatrix() {

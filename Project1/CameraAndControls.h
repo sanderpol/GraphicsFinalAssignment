@@ -12,7 +12,7 @@
 
  class CameraAndControls
 {
-public:
+private:
 	glm::vec3 Position;
 	glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -28,10 +28,15 @@ public:
 
 	float sensitivity = 50000.0f;
 
+	
+
+public:
 	CameraAndControls(int width, int height, glm::vec3 position);
 	void SetCamera(Shader& shader, const char* uniform);
+	void SetCameraPos(Shader& shader, const char* uniform);
 	glm::mat4 GetViewMatrix();
 	glm::mat4 GetProjectionMatrix();
+
 	void KeyBoardHandler(unsigned char key, int mouseX, int mouseY);
 	void MouseHandler(int button, int state, int x, int y);
 	void MotionHandler( int x, int y, float deltaTime);

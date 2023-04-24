@@ -22,8 +22,12 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 	char* vertexshader = glsl::readFile(vertexFile);
 	GLuint vsh_id = glsl::makeVertexShader(vertexshader);
 
+	compileErrors(vsh_id, "VERTEX");
+
 	char* fragshader = glsl::readFile(fragmentFile);
 	GLuint fsh_id = glsl::makeFragmentShader(fragshader);
+
+	compileErrors(fsh_id, "FRAGMENT");
 
 	this->ID = glsl::makeShaderProgram(vsh_id, fsh_id);
 

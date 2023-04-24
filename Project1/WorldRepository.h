@@ -16,10 +16,10 @@ class WorldRepository
 private:
 	static ModelFactory s_model_factory;
 	Shader s_shader;
-	GLuint s_uniform_mv;
 	
 public:
-	void InitializeWorldRepository();
+	WorldRepository();
+	~WorldRepository();
 	void Render(CameraAndControls camara);
 	
 };

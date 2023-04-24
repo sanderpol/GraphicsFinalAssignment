@@ -37,7 +37,7 @@ float deltaTime;
 void Render()
 {
     // Define background
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     
@@ -129,7 +129,7 @@ int main(int argc, char** argv)
 
     camera = new CameraAndControls(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
     worldRep = new WorldRepository();
-    worldRep->InitializeWorldRepository();
+    //worldRep->InitializeWorldRepository();
     //skybox = new Skybox();
     InitBuffers();
     // Hide console window

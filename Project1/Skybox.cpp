@@ -42,10 +42,6 @@ GLuint skyboxIndices[] =
 
 Skybox::Skybox()
 {
-
-}
-
-void Skybox::InitSkyboxShadersAndBuffers() {
 	shader = Shader("./Shaders/vertexshader_skybox.vert", "./Shaders/fragmentshader_skybox.frag");
 	skybox_vao = VAO();
 	skybox_vao.Bind();
@@ -56,9 +52,9 @@ void Skybox::InitSkyboxShadersAndBuffers() {
 	EBO ebo = EBO(ind);
 	skybox_vao.LinkVBO(vbo, 0, 3, GL_FLOAT, sizeof(VertexSkybox), (void*)0);
 
-	VAO::Unbind();
-	VBO::Unbind();
-	EBO::Unbind();
+	skybox_vao.Unbind();
+	vbo.Unbind();
+	ebo.Unbind();
 
 
 	std::string facesCubemap[6] =
@@ -68,7 +64,7 @@ void Skybox::InitSkyboxShadersAndBuffers() {
 		"./Resources/skybox/posy.jpg",
 		"./Resources/skybox/negy.jpg",
 		"./Resources/skybox/posz.jpg",
-		"./Resources/skybox/posy.jpg"
+		"./Resources/skybox/negz.jpg"
 	};
 
 	// Creates the cubemap texture object
@@ -83,7 +79,7 @@ void Skybox::InitSkyboxShadersAndBuffers() {
 	// This might help with seams on some systems
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
-	
+
 
 	// Cycles through all the textures and attaches them to the cubemap object
 	for (unsigned int i = 0; i < 6; i++)
@@ -116,6 +112,10 @@ void Skybox::InitSkyboxShadersAndBuffers() {
 
 	GLuint skybox_uv = glGetUniformLocation(shader.ID, "skybox");
 	glUniform1i(skybox_uv, 0);
+}
+
+void Skybox::InitSkyboxShadersAndBuffers() {
+
 	
 }
 

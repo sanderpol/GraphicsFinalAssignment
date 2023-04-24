@@ -20,7 +20,7 @@ public:
 	VBO(std::vector<Vertex>& vertices);
 	VBO(std::vector<VertexSkybox>& vertices);
 	void Bind();
-	static void Unbind();
+	void Unbind();
 	void Delete();
 };
 #endif // !VBO_H

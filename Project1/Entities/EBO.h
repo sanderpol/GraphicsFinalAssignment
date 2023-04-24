@@ -10,7 +10,7 @@ public:
 	GLuint ID;
 	EBO(std::vector<GLuint>& Indices);
 	void Bind();
-	static void Unbind();
+	void Unbind();
 	void Delete();
 };
 
