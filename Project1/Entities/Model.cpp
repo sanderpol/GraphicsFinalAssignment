@@ -14,7 +14,7 @@ Model::Model(const char* file)
 	traverseNode(0);
 }
 
-void Model::Draw(Shader& shader, CameraAndControls& camera)
+void Model::Draw(Shader& shader, CameraAndControls* camera)
 {
 	// Go over all meshes and draw each one
 	for (unsigned int i = 0; i < meshes.size(); i++)
@@ -44,8 +44,10 @@ void Model::loadMesh(unsigned int indMesh)
 	std::vector<GLuint> indices = getIndices(JSON["accessors"][indAccInd]);
 	std::vector<Texture> textures = getTextures();
 
+	VAO vao = VAO();
+	Mesh mesh(vao, vertices, indices, textures);
 	// Combine the vertices, indices, and textures into a mesh
-	meshes.push_back(Mesh(vertices, indices, textures));
+	meshes.push_back(mesh);
 }
 
 void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix)

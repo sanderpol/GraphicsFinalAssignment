@@ -147,6 +147,21 @@
   <ItemGroup>
     <ClInclude Include="CameraAndControls.h" />
     <ClInclude Include="Entities\EBO.h" />
+    <ClInclude Include="Libraries\boost\filesystem.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\config.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\convenience.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\detail\footer.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\detail\header.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\detail\path_traits.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\detail\utf8_codecvt_facet.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\directory.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\exception.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\file_status.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\fstream.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\operations.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\path.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\path_traits.hpp" />
+    <ClInclude Include="Libraries\boost\filesystem\string_file.hpp" />
     <ClInclude Include="Libraries\glsl.h" />
     <ClInclude Include="Libraries\json.h" />
     <ClInclude Include="Libraries\objloader.h" />

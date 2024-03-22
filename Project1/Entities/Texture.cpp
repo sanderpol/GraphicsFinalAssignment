@@ -12,6 +12,7 @@ Texture::Texture(const char* image, const char* texType, GLuint slot)
 	// Reads the image from a file and stores it in bytes
 	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
 
+
 	// Generates an OpenGL texture object
 	glGenTextures(1, &ID);
 	// Assigns the texture to a Texture Unit
@@ -57,7 +58,7 @@ Texture::Texture(const char* image, const char* texType, GLuint slot)
 			bytes
 		);
 	}
-	else if (numColCh == 2) {
+	else if (numColCh == 1) {
 		glTexImage2D(
 			GL_TEXTURE_2D,
 			0,

@@ -28,6 +28,7 @@ const float DELTA_TIME = 60.0f;
 WorldRepository* worldRep;
 Skybox* skybox;
 CameraAndControls* camera;
+
 float deltaTime;
 
 //--------------------------------------------------------------------------------
@@ -37,7 +38,7 @@ float deltaTime;
 void Render()
 {
     // Define background
-    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClearColor(0.07f, 0.07f, 0.07f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     
@@ -49,7 +50,7 @@ void Render()
 
     deltaTime /= 60.0f;
 
-    worldRep->Render(*camera);
+    worldRep->Render(camera );
     //skybox->Render(*camera);
 
 
@@ -57,8 +58,8 @@ void Render()
     // Swap buffers
     glutSwapBuffers();
 
-    int errorCode = glGetError();
-    std::cout << errorCode << endl;
+    //int errorCode = glGetError();
+    //std::cout << errorCode << endl;
 }
 
 /// <summary>
@@ -86,6 +87,22 @@ void Render(int n)
     glutTimerFunc(DELTA_TIME, Render, 0);
 }
 
+void GLAPIENTRY
+MessageCallback(GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const GLchar* message,
+    const void* userParam)
+{
+    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+        (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+        type, severity, message);
+
+}
+
+
 //------------------------------------------------------------
 // void InitGlutGlew(int argc, char **argv)
 // Initializes Glut and Glew
@@ -94,10 +111,13 @@ void Render(int n)
 void InitGlutGlew(int argc, char** argv)
 {
     glutInit(&argc, argv);
+    //glutInitContextVersion(4, 3);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(WIDTH, HEIGHT);
     glutCreateWindow("Graphics Project");
     glutDisplayFunc(Render);
+
+
 
 
     glutKeyboardFunc(KeyBoardHandler);
@@ -122,19 +142,25 @@ void InitBuffers() {
 }
 
 
+
+
 int main(int argc, char** argv)
 {
     InitGlutGlew(argc, argv);
     //WorldRepository::InitializeWorldRepository();
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 
     camera = new CameraAndControls(WIDTH, HEIGHT, glm::vec3(0.0f, 0.0f, 2.0f));
     worldRep = new WorldRepository();
-    //worldRep->InitializeWorldRepository();
     //skybox = new Skybox();
     InitBuffers();
     // Hide console window
     HWND hWnd = GetConsoleWindow();
     ShowWindow(hWnd, SW_HIDE);
+
+    
+
     //std::cin.get();
     // Main loop
     glutMainLoop();

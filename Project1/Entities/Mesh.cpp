@@ -1,29 +1,30 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
+Mesh::Mesh(VAO& vao,std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
-
-	VAO.Bind();
+	this->thisVAO = vao;
+	
 	VBO VBO(vertices);
 	EBO EBO(indices);
+	thisVAO.Bind();
 
-	VAO.LinkVBO(VBO, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
-	VAO.LinkVBO(VBO, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
-	VAO.LinkVBO(VBO, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
-	VAO.LinkVBO(VBO, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
+	thisVAO.LinkVBO(VBO, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
+	thisVAO.LinkVBO(VBO, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
+	thisVAO.LinkVBO(VBO, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
+	thisVAO.LinkVBO(VBO, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
 
-	VAO.Unbind();
+	thisVAO.Unbind();
 	VBO.Unbind();
 	EBO.Unbind();
 }
 
-void Mesh::Draw(Shader& shader, CameraAndControls& camera, glm::mat4 matrix, glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
+void Mesh::Draw(Shader& shader, CameraAndControls* camera, glm::mat4 matrix, glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
 {
 	shader.Activate();
-	this->VAO.Bind();
+	thisVAO.Bind();
 
 	unsigned int numDiffuse = 0;
 	unsigned int numSpecular = 0;
@@ -41,8 +42,8 @@ void Mesh::Draw(Shader& shader, CameraAndControls& camera, glm::mat4 matrix, glm
 		textures[i].Bind();
 	}
 
-	camera.SetCameraPos(shader, "camPos");
-	camera.SetCamera(shader, "camMat");
+	camera->SetCameraPos(shader, "camPos");
+	camera->SetCamera(shader, "camMat");
 
 	glm::mat4 trans = glm::mat4(1.0f);
 	glm::mat4 rot = glm::mat4(1.0f);
@@ -57,6 +58,7 @@ void Mesh::Draw(Shader& shader, CameraAndControls& camera, glm::mat4 matrix, glm
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "scale"), 1, GL_FALSE, glm::value_ptr(sca));
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(matrix));
 
+	//shader.Activate();
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
 

@@ -1,14 +1,16 @@
 #version 430 core
 
 out vec4 FragColor;
+
 // Input from vertex shader
 in VS_OUT
 {
-    vec3 Pos;
-    vec3 Normal;
-    vec3 Color;
-    vec2 TexCor;
-} fs_in;
+   vec3 Pos;
+   vec3 Norms;
+   vec3 Color;
+   vec2 TexCor;
+} vs_out;
+
 
 //
 uniform sampler2D diffuse0;
@@ -26,18 +28,18 @@ vec4 direcLight()
 	float ambient = 0.20f;
 
 	// diffuse lighting
-	vec3 normal = normalize(fs_in.Normal);
+	vec3 normal = normalize(vs_out.Norms);
 	vec3 lightDirection = normalize(vec3(1.0f, 1.0f, 0.0f));
 	float diffuse = max(dot(normal, lightDirection), 0.0f);
 
 	// specular lighting
 	float specularLight = 0.50f;
-	vec3 viewDirection = normalize(camPos - fs_in.Pos);
+	vec3 viewDirection = normalize(camPos - vs_out.Pos);
 	vec3 reflectionDirection = reflect(-lightDirection, normal);
 	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 16);
 	float finalSpec = specAmount * specularLight;
 
-	return (texture(diffuse0, fs_in.TexCor) * (diffuse + ambient) + texture(specular0, fs_in.TexCor).r * finalSpec) * lightColor;
+	return (texture(diffuse0, vs_out.TexCor) * (diffuse + ambient) + texture(specular0, vs_out.TexCor).r * finalSpec) * lightColor;
 }
 
 void main()

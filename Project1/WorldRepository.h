@@ -19,8 +19,8 @@ private:
 	
 public:
 	WorldRepository();
-	~WorldRepository();
-	void Render(CameraAndControls camara);
+	//~WorldRepository();
+	void Render(CameraAndControls* camara);
 	
 };
 
